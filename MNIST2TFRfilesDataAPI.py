@@ -18,10 +18,10 @@ import matplotlib.pyplot as plt
 # Load training and eval data
 ((train_data, train_labels),
  (eval_data, eval_labels)) = tf.keras.datasets.mnist.load_data()
-#Scale data
+#Scale data 
 train_data = train_data / np.float32(255)
 
-#%% Function to parse a single record from the orig MNIST data into dict suitable for 
+#%% Function to parse a single record from the orig MNIST data into dict suitable for TFRecords
 
 def get_observation(observation_id=0):
     img_data = train_data[observation_id,:,:]
@@ -45,8 +45,8 @@ def get_example_object(single_record):
         'width': tf.train.Feature(
             int64_list=tf.train.Int64List(value=[single_record['width']])),
         'img_string': tf.train.Feature(
-            #float_list=tf.train.FloatList(value=single_record['img_string'])), 
-            bytes_list=tf.train.BytesList(value=[single_record['img_string'].tobytes(order='C')])), 
+            float_list=tf.train.FloatList(value=single_record['img_string'])), 
+            #bytes_list=tf.train.BytesList(value=[single_record['img_string'].tobytes(order='C')])), 
         'label': tf.train.Feature(
             int64_list=tf.train.Int64List(value=[single_record['label']]))
     }))
