@@ -1,11 +1,11 @@
-# TensorFlow Estimators API - Out-of-the-core feeding of large datasets from drive via TFRecords (MNIST example)
+# TensorFlow Estimators API: Out-of-the-core feeding of large datasets from drive via TFRecords (MNIST example)
 It is easy to hit resource limits when working with large datasets. The available memory in particular becomes quickly a limiting factor when training your neural networks on swaths of data. The solution is to create a continuous stream of data that will sequentially read batch data from drive(s). Using this approach, the memory needs to hold only one batch of data while pre-loading the data for the next batch, allowing us to operate with datasets of virtually unlimited size.
 This article demonstrates the approach on the popular [MNIST dataset](http://yann.lecun.com/exdb/mnist/) using TensorFlow Estimators API, TFRecords and Data API.
 
 ## Detailed Documentation and Practical examples:
 [Visit my blog post](https://datamadness.github.io/tensorflow_estimator_large_dataset_feed) for detailed documentation and practical examples
 
-#### High Level Workflow Overview
+## High Level Workflow Overview
 1. Load MNIST dataset via Keras
 1. Serialize the data into list(s)
 1. Save the data on drive in TFRecord format
@@ -13,9 +13,9 @@ This article demonstrates the approach on the popular [MNIST dataset](http://yan
 1. Train the Convolutional Neural Network streaming the data via a custom input function
 
 
-#### Saving Data in TFRecord format
+## Saving Data in TFRecord format
 The MNIST training dataset consists of 60000 28x28 images of hand written digits such as this one:
-![image post](/assets/images/tf_file_feed/MNIST_digit.png)
+![image post](https://datamadness.github.io/assets/images/tf_file_feed/MNIST_digit.png)
 
 To save this data into TFRecord format, a couple of things need to happen: 
 
@@ -82,7 +82,7 @@ for file_id in range(numFiles):
 ```
 
 
-#### Building an input function for Estimators API using TensorFlow Data API
+## Building an input function for Estimators API using TensorFlow Data API
 Once we have the data saved into TFRecords on a drive, the next step is to write an input function for the Estimators API that will stream the data into your model. 
 The easiest way to accomplish this is via the Data API, specifically the TFRecordDataset class that will directly create a dataset from a list of TFRecord files. 
 
@@ -130,7 +130,7 @@ def dataset_input_fn(subfolder, batch_size, train = False, num_epochs=None):
     return dataset
 ```
 
-#### Plugging it all together: Training your CNN on a data stream from TFR files
+## Plugging it all together: Training your CNN on a data stream from TFR files
 
 Now when we have all the pieces ready, we can put it all together and train our MNIST CNN on a data streaming from TFRecord files saved on your drive. Here is the complete modified [MNIST CNN example from TensorFlow page](https://www.tensorflow.org/tutorials/estimators/cnn):
 
